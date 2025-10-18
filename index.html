@@ -1,0 +1,66 @@
+//index.html
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Món Quà Đặc Biệt 💕</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/howler@2.2.3/howler.min.js"></script>
+
+</head>
+<body>
+    <!-- Audio Background -->
+    <audio id="bgMusic" loop>
+        <source src="heart-bg.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Page 1: Nhập mật khẩu -->
+    <div id="page1" class="page active">
+        <div class="container">
+            <h1>Có một món quà đặc biệt dành cho bạn 💕</h1>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Mật khẩu của trái tim 💖" maxlength="4">
+                <button onclick="checkPassword()">Mở quà ✨</button>
+            </div>
+            <p id="error" class="error hidden">Mật khẩu chưa đúng rồi, thử lại nhé 😘</p>
+        </div>
+    </div>
+
+    <!-- Page 2: Hộp quà -->
+    <div id="page2" class="page">
+        <div class="container">
+            <h1>Chúc mừng Ngày Phụ nữ Việt Nam! 🇻🇳</h1>
+            <div class="gift-box" onclick="openGift()">
+                <div class="box">🎁</div>
+                <p>Nhấn vào để mở quà nhé 🎁</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 3: Phong bì -->
+    <div id="page3" class="page">
+        <div class="container">
+            <div class="envelope" id="envelope">
+                <div class="card">Đôi lời gửi em 💖</div>
+            </div>
+            <div class="choices">
+                <button class="btn-yes" onclick="openLetter()">✅ Có, mở thư</button>
+                <button class="btn-no" onclick="refuseLetter()">❌ Không, ngại lắm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 4: Thiệp chúc mừng -->
+    <div id="page4" class="page">
+        <div class="container">
+            <div class="card-full" id="finalCard">
+                <p class="typing-text" id="typingText"></p>
+            </div>
+            <button class="restart" onclick="restart()">💕 Xem lại nào 💕</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
