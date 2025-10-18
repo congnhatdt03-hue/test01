@@ -44,15 +44,20 @@
             width: 100%;
         }
 
-        .page {
-            display: none;
-            animation: fadeIn 0.8s ease-out;
-            width: 100%;
+        .page{
+          display:flex;
+          width:100%;
+          opacity:0;
+          transform: translateY(12px);
+          pointer-events:none;
+          transition: opacity .45s ease, transform .45s ease;
+        }
+        .page.active{
+          opacity:1;
+          transform: translateY(0);
+          pointer-events:auto;
         }
 
-        .page.active {
-            display: flex;
-        }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -256,33 +261,51 @@
             z-index: 2;
         }
 
-        .letter-content {
-            padding: 20px;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s ease;
+        .letter-content{
+          max-width: 760px;        /* rộng tối đa */
+          width: 92%;
+          margin: 0 auto;
+          padding: 28px 32px;
+          height: auto;            /* cao theo nội dung */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #fff;        /* khung trắng */
+          border: 2px solid #ff9ac0;
+          border-radius: 20px;
+          box-shadow: 0 10px 28px rgba(0,0,0,.12);
+          opacity: 0;
+          transform: translateY(10px);
+          transition: opacity .6s ease, transform .6s ease;
+        }
+        .magic-envelope.open .letter-content{
+          opacity:1;
+          transform: translateY(0);
         }
 
-        .magic-envelope.open .letter-content {
-            opacity: 1;
-            transform: translateY(0);
+
+        .typing-text{
+          position: relative;
+          font-size: clamp(1.2rem, 3.2vw, 1.6rem);
+          line-height: 1.9;
+          color: #d63384;
+          text-align: center;
+          padding: 0;              /* padding đã đưa ra khung */
+          background: transparent; /* không cần nền riêng */
+          border-radius: 0;
+          box-shadow: none;
+          max-width: 100%;
+        }
+        /* viền đứt trang trí mảnh */
+        .typing-text::after{
+          content:'';
+          position:absolute;
+          inset:-6px;
+          border:2px dashed rgba(255,105,180,.25);
+          border-radius:16px;
+          pointer-events:none;
         }
 
-        .typing-text {
-            font-size: clamp(1.1rem, 3.5vw, 1.4rem);
-            line-height: 1.6;
-            color: #d63384;
-            text-align: center;
-            animation: fadeInText 1s ease-out;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
 
         @keyframes fadeInText {
             from { opacity: 0; transform: scale(0.9); }
@@ -301,14 +324,13 @@
             51%, 100% { opacity: 0; }
         }
 
-        .bears-container {
-            display: flex;
-            gap: clamp(20px, 5vw, 40px);
-            margin: 30px auto;
-            justify-content: center;
-            width: 100%;
-            max-width: 200px;
-            margin-top: 20px;
+        .bears-container{
+          display:flex;
+          gap: clamp(20px, 5vw, 40px);
+          justify-content:center;
+          width:100%;
+          max-width:200px;
+          margin: 30px auto 0;   /* trên 30px, dưới 0 */
         }
 
         .bear {
@@ -323,7 +345,7 @@
         }
 
         .bear-left { animation-delay: 0s; }
-        .bear-right { animation-delay: 0.5s; }
+        .bear-right { animation-delay: 0.3s; }
 
         @keyframes bearBounce {
             0%, 100% { transform: translateY(0); }
@@ -408,6 +430,8 @@
             .magic-envelope { width: 240px; height: 170px; }
             .envelope-img { width: 140px !important; }
             .typing-text { font-size: clamp(1rem, 3vw, 1.2rem); }
+            .letter-content{ padding: 18px 20px; }
+            .typing-text{ font-size: clamp(1.05rem,4vw,1.25rem); line-height: 1.8; }
         }
 
         @media (max-width: 320px) {
@@ -522,17 +546,19 @@
             passwordInput.focus();
         });
 
-        function checkPassword() {
-            if (!passwordInput) return;
-            const input = passwordInput.value;
-            if (input === CORRECT_PASSWORD) {
-                showPage('page2');
-            } else {
-                errorMsg.classList.remove('hidden');
-                passwordInput.value = '';
-                passwordInput.focus();
-                setTimeout(() => errorMsg.classList.add('hidden'), 3000);
-            }
+        function checkPassword(){
+          if(!passwordInput) return;
+          const input = passwordInput.value;
+          if(input === CORRECT_PASSWORD){
+            bgMusic.volume = 0.35;
+            bgMusic.play().catch(()=>{});
+            showPage('page2');
+          }else{
+            errorMsg.classList.remove('hidden');
+            passwordInput.value = '';
+            passwordInput.focus();
+            setTimeout(()=> errorMsg.classList.add('hidden'), 3000);
+          }
         }
 
         function openGift() {
@@ -688,3 +714,4 @@
     </script>
 </body>
 </html>
+
